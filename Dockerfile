@@ -18,6 +18,8 @@ RUN \
 
 # Rebuild the source code only when needed
 FROM base AS builder
+ARG MONGODB_URI
+ARG NEXTAUTH_SECRET
 ENV MONGODB_URI=$MONGODB_URI
 ENV NEXTAUTH_SECRET=$NEXTAUTH_SECRET
 WORKDIR /app
@@ -36,6 +38,8 @@ RUN yarn build
 
 # Production image, copy all the files and run next
 FROM base AS runner
+ARG MONGODB_URI
+ARG NEXTAUTH_SECRET
 ENV MONGODB_URI=$MONGODB_URI
 ENV NEXTAUTH_SECRET=$NEXTAUTH_SECRET
 WORKDIR /app
