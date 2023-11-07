@@ -18,6 +18,8 @@ RUN \
 
 # Rebuild the source code only when needed
 FROM base AS builder
+ENV MONGODB_URI=$MONGODB_URI
+ENV NEXTAUTH_SECRET=$NEXTAUTH_SECRET
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
@@ -34,6 +36,8 @@ RUN yarn build
 
 # Production image, copy all the files and run next
 FROM base AS runner
+ENV MONGODB_URI=$MONGODB_URI
+ENV NEXTAUTH_SECRET=$NEXTAUTH_SECRET
 WORKDIR /app
 
 ENV NODE_ENV production

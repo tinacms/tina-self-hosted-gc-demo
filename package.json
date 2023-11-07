@@ -3,9 +3,9 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "TINA_PUBLIC_IS_LOCAL=true concurrently \"tsc --watch\" \"nodemon dist/app.js\" \"nodemon --watch site eleventy --input='site'\" \"tinacms dev\"",
-    "dev:prod": "TINA_PUBLIC_IS_LOCAL=false concurrently \"tsc --watch\" \"nodemon dist/app.js\" \"nodemon --watch site eleventy --input='site'\" \"tinacms dev\"",
-    "build": "tsc && tinacms build --verbose && eleventy --input='site'",
+    "dev": "TINA_PUBLIC_IS_LOCAL=true concurrently \"tinacms dev\" \"tsc --watch\" \"nodemon dist/app.js\" \"nodemon --watch site eleventy --input='site'\"",
+    "dev:prod": "TINA_PUBLIC_IS_LOCAL=false concurrently \"tinacms dev\" \"tsc --watch\" \"nodemon dist/app.js\" \"nodemon --watch site eleventy --input='site'\"",
+    "build": "tinacms build --verbose && eleventy --input='site' && tsc",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
