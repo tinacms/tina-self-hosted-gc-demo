@@ -21,4 +21,5 @@ steps:
       - 'managed'
       - '--allow-unauthenticated'
 options:
-  logging: GCS_ONLY
+  logStreamingOption: STREAM_ON
+  logging: CLOUD_LOGGING_ONLY
