@@ -27,7 +27,7 @@ steps:
       - '--allow-unauthenticated'
 availableSecrets:
   secretManager:
-    - versionName: projects/$PROJECT_ID/secrets/MONGODB_URI/versions/latest
+    - versionName: projects/$PROJECT_NUMBER/secrets/MONGODB_URI/versions/latest
       env: 'MONGODB_URI'
 #substitutions:
 #  _MONGODB_URI: $MONGODB_URI
