@@ -3,6 +3,9 @@ steps:
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA', '.']
+    env:
+      - 'MONGODB_URI=$MONGODB_URI'
+      - 'NEXTAUTH_SECRET=$NEXTAUTH_SECRET'
   # Push the container image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA']
