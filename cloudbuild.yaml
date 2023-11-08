@@ -4,10 +4,10 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA', '.']
     env:
-#      - 'MONGODB_URI=${_MONGODB_URI}'
+      - 'MONGODB_URI=${_MONGODB_URI}'
       - 'NEXTAUTH_SECRET=${_NEXTAUTH_SECRET}'
-    secretEnv:
-      - 'MONGODB_URI'
+#    secretEnv:
+#      - 'MONGODB_URI'
       # Push the container image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA']
@@ -25,10 +25,10 @@ steps:
       - '--platform'
       - 'managed'
       - '--allow-unauthenticated'
-availableSecrets:
-  secretManager:
-    - versionName: projects/$PROJECT_NUMBER/secrets/MONGODB_URI/versions/latest
-      env: 'MONGODB_URI'
+#availableSecrets:
+#  secretManager:
+#    - versionName: projects/$PROJECT_NUMBER/secrets/MONGODB_URI/versions/latest
+#      env: 'MONGODB_URI'
 #substitutions:
 #  _MONGODB_URI: $MONGODB_URI
 #  _NEXTAUTH_SECRET: $NEXTAUTH_SECRET
