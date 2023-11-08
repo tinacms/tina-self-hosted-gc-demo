@@ -20,3 +20,5 @@ steps:
       - '--platform'
       - 'managed'
       - '--allow-unauthenticated'
+options:
+  logging: GCS_ONLY
