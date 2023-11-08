@@ -29,9 +29,9 @@ steps:
 #  secretManager:
 #    - versionName: projects/$PROJECT_NUMBER/secrets/MONGODB_URI/versions/latest
 #      env: 'MONGODB_URI'
-#substitutions:
-#  _MONGODB_URI: $MONGODB_URI
-#  _NEXTAUTH_SECRET: $NEXTAUTH_SECRET
+substitutions:
+  _MONGODB_URI: $MONGODB_URI
+  _NEXTAUTH_SECRET: $NEXTAUTH_SECRET
 options:
   logStreamingOption: STREAM_ON
   logging: CLOUD_LOGGING_ONLY
