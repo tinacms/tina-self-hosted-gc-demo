@@ -2,7 +2,12 @@
 steps:
   # Build the container image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '--build-arg', 'MONGODB_URI=$$MONGODB_URI', '--build-arg', 'NEXTAUTH_SECRET=$$NEXTAUTH_SECRET', '-t', 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA', '.']
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        build --build-arg MONGODB_URI=$$MONGODB_URI --build-arg NEXTAUTH_SECRET=$$NEXTAUTH_SECRET -t gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA .
+#    args: ['build', '--build-arg', 'MONGODB_URI=$$MONGODB_URI', '--build-arg', 'NEXTAUTH_SECRET=$$NEXTAUTH_SECRET', '-t', 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA', '.']
 #    env:
 #      - 'MONGODB_URI=${_MONGODB_URI}'
 #      - 'NEXTAUTH_SECRET=${_NEXTAUTH_SECRET}'
