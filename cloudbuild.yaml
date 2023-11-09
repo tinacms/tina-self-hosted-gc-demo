@@ -25,10 +25,10 @@ steps:
       - '--platform'
       - 'managed'
       - '--allow-unauthenticated'
-#availableSecrets:
-#  secretManager:
-#    - versionName: projects/$PROJECT_NUMBER/secrets/MONGODB_URI/versions/latest
-#      env: 'MONGODB_URI'
+availableSecrets:
+  secretManager:
+    - versionName: projects/$PROJECT_NUMBER/secrets/MONGODB_URI/versions/latest
+      env: 'MONGODB_URI'
 #substitutions:
 #  _MONGODB_URI: $MONGODB_URI
 #  _NEXTAUTH_SECRET: $NEXTAUTH_SECRET
