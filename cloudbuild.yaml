@@ -6,8 +6,8 @@ steps:
 #    env:
 #      - 'MONGODB_URI=${_MONGODB_URI}'
 #      - 'NEXTAUTH_SECRET=${_NEXTAUTH_SECRET}'
-#    secretEnv:
-#      - 'MONGODB_URI'
+    secretEnv:
+      - 'MONGODB_URI'
       # Push the container image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA']
