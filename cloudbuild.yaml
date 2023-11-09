@@ -19,20 +19,28 @@ steps:
     args: ['push', 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA']
   # Deploy container image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: gcloud
+    entrypoint: sh
     args:
-      - 'run'
-      - 'deploy'
-      - 'self-hosted-docker-demo'
-      - '--update-env-vars'
-      - 'MONGODB_URI=projects/$PROJECT_NUMBER/secrets/MONGODB_URI/versions/latest,NEXTAUTH_SECRET=projects/$PROJECT_NUMBER/secrets/NEXTAUTH_SECRET/versions/latest,GITHUB_PERSONAL_ACCESS_TOKEN=projects/$PROJECT_NUMBER/secrets/GITHUB_PERSONAL_ACCESS_TOKEN/versions/latest'
-      - '--image'
-      - 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA'
-      - '--region'
-      - 'us-central1'
-      - '--platform'
-      - 'managed'
-      - '--allow-unauthenticated'
+      - '-c'
+      - |
+        MONGODB_URI=$(gcloud secrets versions access latest --secret=MONGODB_URI)
+        NEXTAUTH_SECRET=$(gcloud secrets versions access latest --secret=NEXTAUTH_SECRET)
+        GITHUB_PERSONAL_ACCESS_TOKEN=$(gcloud secrets versions access latest --secret=GITHUB_PERSONAL_ACCESS_TOKEN)
+        gcloud run deploy self-hosted-docker-demo --image gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA --region us-central1 --platform managed --allow-unauthenticated --update-env-vars MONGODB_URI=$$MONGODB_URI,NEXTAUTH_SECRET=$$NEXTAUTH_SECRET,GITHUB_PERSONAL_ACCESS_TOKEN=$$GITHUB_PERSONAL_ACCESS_TOKEN
+#    entrypoint: gcloud
+#    args:
+#      - 'run'
+#      - 'deploy'
+#      - 'self-hosted-docker-demo'
+#      - '--update-env-vars'
+#      - 'MONGODB_URI=projects/$PROJECT_NUMBER/secrets/MONGODB_URI/versions/latest,NEXTAUTH_SECRET=projects/$PROJECT_NUMBER/secrets/NEXTAUTH_SECRET/versions/latest,GITHUB_PERSONAL_ACCESS_TOKEN=projects/$PROJECT_NUMBER/secrets/GITHUB_PERSONAL_ACCESS_TOKEN/versions/latest'
+#      - '--image'
+#      - 'gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA'
+#      - '--region'
+#      - 'us-central1'
+#      - '--platform'
+#      - 'managed'
+#      - '--allow-unauthenticated'
     secretEnv:
       - 'MONGODB_URI'
       - 'GITHUB_PERSONAL_ACCESS_TOKEN'
