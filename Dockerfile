@@ -21,6 +21,7 @@ RUN \
 FROM base AS builder
 ARG MONGODB_URI
 ARG NEXTAUTH_SECRET
+ARG GITHUB_BRANCH
 
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules

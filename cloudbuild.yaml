@@ -5,7 +5,7 @@ steps:
     args:
       - -c
       - |
-        docker build --build-arg MONGODB_URI --build-arg NEXTAUTH_SECRET -t gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA .
+        docker build --build-arg MONGODB_URI --build-arg NEXTAUTH_SECRET --build-arg GITHUB_BRANCH=$BRANCH_NAME -t gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA .
     secretEnv:
       - 'MONGODB_URI'
       - 'NEXTAUTH_SECRET'
