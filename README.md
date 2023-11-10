@@ -90,6 +90,8 @@ Under Authentication, select 'Allow unauthenticated invocations'. Under Containe
 
 Push a change to the configured branch to deploy.
 
+Note: For Discord (and other providers), the _DOMAIN substitution variable must be set to the domain of the deployed app. This can be done in the Cloud Run UI. This variable is used to set the NEXTAUTH_URL environment variable.
+
 ## Support
 
 If you have any questions, please reach out to us on [Discord](https://discord.com/invite/zumN63Ybpf). We are happy to help!
