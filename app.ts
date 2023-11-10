@@ -46,12 +46,7 @@ const handleTina: RequestHandler = async (req, res) => {
   await handler(req, res);
 };
 
-app.post("/api/tina/*", async (req, res, next) => {
-  // Modify request if needed
-  handleTina(req, res, next);
-});
-
-app.get("/api/tina/*", async (req, res, next) => {
+app.all("/api/tina/*", async (req, res, next) => {
   // Modify request if needed
   handleTina(req, res, next);
 });
