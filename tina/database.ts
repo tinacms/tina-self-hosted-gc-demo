@@ -24,7 +24,7 @@ export default isLocal
       }),
       databaseAdapter: new MongodbLevel<string, Record<string, unknown>>({
         collectionName: 'tinacms',
-        dbName: "tinacms-self-host",
+        dbName: "tinacms-self-host-discord",
         mongoUri: process.env.MONGODB_URI!,
       }),
       namespace: branch,

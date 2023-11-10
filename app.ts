@@ -1,3 +1,5 @@
+import DiscordProvider from 'next-auth/providers/discord'
+import NextAuth from 'next-auth'
 import express, { RequestHandler } from "express";
 import {
   TinaNodeBackend,
@@ -25,15 +27,22 @@ app.use(cookieParser());
 
 const isLocal = process.env.TINA_PUBLIC_IS_LOCAL === "true";
 
+const authOptions = TinaAuthJSOptions({
+    databaseClient,
+    secret: process.env.NEXTAUTH_SECRET!,
+    uidProp: 'name', // name is the unique identifier for Discord
+    providers: [
+      DiscordProvider({
+        clientId: process.env.DISCORD_CLIENT_ID!,
+        clientSecret: process.env.DISCORD_CLIENT_SECRET!,
+      })
+    ]
+  })
+
 const handler = TinaNodeBackend({
   authProvider: isLocal
     ? LocalBackendAuthProvider()
-    : AuthJsBackendAuthProvider({
-        authOptions: TinaAuthJSOptions({
-          databaseClient,
-          secret: process.env.NEXTAUTH_SECRET!,
-        }),
-      }),
+    : AuthJsBackendAuthProvider({ authOptions }),
   databaseClient,
 });
 
@@ -46,14 +55,15 @@ const handleTina: RequestHandler = async (req, res) => {
   await handler(req, res);
 };
 
-app.post("/api/tina/*", async (req, res, next) => {
+app.all("/api/tina/*", async (req, res, next) => {
   // Modify request if needed
   handleTina(req, res, next);
 });
 
-app.get("/api/tina/*", async (req, res, next) => {
-  // Modify request if needed
-  handleTina(req, res, next);
+app.all("/api/auth/*", async (req, res, next) => {
+  // setup nextauth query
+  req.query.nextauth = req.path.split('/').slice(3)
+  NextAuth(authOptions)(req, res)
 });
 
 app.listen(port, () => {

@@ -1,13 +1,9 @@
 {
     "users": [
       {
-        "name": "Tina User",
-        "email": "user@tina.io",
-        "username": "tina",
-        "password": {
-          "value": "tinarocks",
-          "passwordChangeRequired": true
-        }
+        "name": "Discord User",
+        "email": "myuser@foo.bar.com",
+        "username": "discorduser"
       }
     ]
   }
