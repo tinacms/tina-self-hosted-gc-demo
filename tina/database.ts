@@ -5,6 +5,14 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+if (!process.env.TINA_PUBLIC_IS_LOCAL) {
+  console.warn("TINA_PUBLIC_IS_LOCAL is not defined")
+}
+
+if (!process.env.MONGODB_URI) {
+  throw new Error("MONGODB_URI must be defined")
+}
+
 const isLocal = process.env.TINA_PUBLIC_IS_LOCAL === "true";
 
 const branch =
