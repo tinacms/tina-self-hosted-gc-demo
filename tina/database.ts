@@ -13,7 +13,6 @@ const branch =
   process.env.HEAD ||
   "main";
 
-console.log(JSON.stringify(process.env))
 export default isLocal
   ? createLocalDatabase()
   : createDatabase({
