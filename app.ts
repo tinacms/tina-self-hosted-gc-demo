@@ -31,6 +31,7 @@ const authOptions = TinaAuthJSOptions({
     databaseClient,
     secret: process.env.NEXTAUTH_SECRET!,
     uidProp: 'name', // name is the unique identifier for Discord
+    debug: process.env.DEBUG === 'true',
     providers: [
       DiscordProvider({
         clientId: process.env.DISCORD_CLIENT_ID!,
