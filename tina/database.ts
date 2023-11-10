@@ -12,7 +12,7 @@ const branch =
   process.env.VERCEL_GIT_COMMIT_REF ||
   process.env.HEAD ||
   "main";
-console.log({ MONGODB_URI: (process.env.MONGODB_URI || '').substr(1,10) })
+
 export default isLocal
   ? createLocalDatabase()
   : createDatabase({
