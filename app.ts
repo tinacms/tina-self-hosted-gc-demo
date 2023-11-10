@@ -13,6 +13,22 @@ import { databaseClient } from "./tina/__generated__/databaseClient";
 
 dotenv.config();
 
+if (!process.env.NEXTAUTH_SECRET) {
+  throw new Error("NEXTAUTH_SECRET must be defined")
+}
+
+if (!process.env.GITHUB_OWNER) {
+  throw new Error("GITHUB_OWNER must be defined")
+}
+
+if (!process.env.GITHUB_REPO) {
+  throw new Error("GITHUB_REPO must be defined")
+}
+
+if (!process.env.GITHUB_PERSONAL_ACCESS_TOKEN) {
+  throw new Error("GITHUB_PERSONAL_ACCESS_TOKEN must be defined")
+}
+
 const port = process.env.PORT || 3000;
 
 const app = express();
