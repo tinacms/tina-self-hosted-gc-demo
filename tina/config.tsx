@@ -20,6 +20,7 @@ const config = defineConfig({
     tina: {
       mediaRoot: "",
       publicFolder: "public",
+      static: true,
     },
   },
   schema: {
