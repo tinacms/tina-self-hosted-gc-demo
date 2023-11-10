@@ -1,8 +1,8 @@
-# TinaCMS Docker Self-Hosted Demo
+# TinaCMS Self-Hosted Google Cloud Demo
 
-This is a demo of how one can self-host TinaCMS with a static site hosted on Docker. This demo is set up to use [Vercel Functions](https://tina.io/docs/self-hosted/tina-backend/vercel-functions/) and [Netlify Functions](https://tina.io/docs/self-hosted/tina-backend/netlify-functions/) to host the [Tina backend](https://tina.io/docs/self-hosted/overview/).
+This is a demo of how one can self-host TinaCMS with a static site hosted on Google Cloud's Cloud Run.
 
-This site is setup to use 11ty for the static site generator, but you can use any static site generator you want.
+This site is set up to use 11ty for the static site generator, but you can use any static site generator you want.
 
 ## Overview
 
@@ -24,60 +24,67 @@ Copy the `.env.sample` and provide the appropriate values:
 cp .env.sample .env
 ```
 
-`GITHUB_OWNER`: The owner of the github repo you want to use
-`GITHUB_REPO`: The name of the github repo you want to use
-`GITHUB_BRANCH`: The branch of the github repo you want to use
-`GITHUB_PERSONAL_ACCESS_TOKEN`: A [github personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) with repo access to both read and write
+`GITHUB_OWNER`: The owner of the GitHub repo you want to use
+`GITHUB_REPO`: The name of the GitHub repo you want to use
+`GITHUB_BRANCH`: The branch of the GitHub repo you want to use
+`GITHUB_PERSONAL_ACCESS_TOKEN`: A [GitHub personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) with repo access to both read and write
 `MONGO_URI`: The connection string for your MongoDB database
 `NEXTAUTH_SECRET`: A random string used to encrypt the session
 
-## Instal dependencies
+## Install dependencies
 
 ```
 yarn install
 ```
 
-#### Setup with Vercel functions
-
-When using vercel functions, your backend function is location at `/api/tina/backend.ts`.
-
-To install the Vercel CLI, run:
-
-```
-yarn global add vercel
-```
+## Local Development
 
 To run the app locally:
 
 ```
-vercel dev
+yarn run dev
 ```
 
-This will start the Vercel function and run the app locally.
+This will start the app locally.
 
-### Setup with Netlify functions
+### Testing auth
 
-When using netlify functions, your backend function is location at `netlify/functions/tina.ts`.
+Set `TINA_PUBLIC_IS_LOCAL` to "false" to test your auth integration locally or use `yarn run dev:prod`.
 
-To install the Netlify CLI, run:
+## Deploying to Google Cloud
 
-```
-yarn global add netlify-cli
-```
+### Setting up Google Cloud
 
-To run the app locally:
+You'll need to set up a Google Cloud account and project. You can follow [this guide](https://cloud.google.com/run/docs/quickstarts/build-and-deploy/nodejs) to get started.
 
-```
-netlify dev
-```
+The steps below assume you have the [Google Cloud SDK](https://cloud.google.com/sdk/docs/install) installed and configured.
 
-## Testing auth
+First create the project. After the project is created, select it and enable the Secret Manager API and the Identity and Access Management (IAM) API.
 
-Set `TINA_PUBLIC_IS_LOCAL` to "false" to test your auth integration locally
+#### Setting up Secrets 
 
-## Troubleshooting
+You'll need to set up the following secrets in Google Cloud:
 
-If you are having issues please check out the [self hosted docs](https://tina.io/docs/self-hosted/overview/)
+- GITHUB_PERSONAL_ACCESS_TOKEN (the GitHub personal access token)
+- NEXTAUTH_SECRET (a random string used to encrypt the session)
+- MONGO_URI (the connection string for your MongoDB database)
+
+The following principals must be granted the `Secret Manager Secret Accessor` role on the secret: 
+
+- [PROJECT_NUMBER]-compute@developer.gserviceaccount.com
+- [PROJECT_NUMBER]@cloudbuild.gserviceaccount.com
+
+Where `[PROJECT_NUMBER]` is the number of your Google Cloud project. Note that the (IAM) API must be enabled to add these principals.
+
+#### Cloud Run
+
+Create a new Service. Select 'Continuously deploy new revisions from a source repository'. 
+
+Select the Source Repository (Connecting if necessary). Click Next. Set the branch regex (ie `^main$`). Set the Build Type to Dockerfile. Click Save.
+
+Under Authentication, select 'Allow unauthenticated invocations'. Under Container(s), Volumes, Networking, Security, set the container port to 3000. Click done. Click Create.
+
+Push a change to the configured branch to deploy.
 
 ## Support
 
