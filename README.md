@@ -30,6 +30,8 @@ cp .env.sample .env
 `GITHUB_PERSONAL_ACCESS_TOKEN`: A [GitHub personal access token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens#creating-a-fine-grained-personal-access-token) with repo access to both read and write
 `MONGO_URI`: The connection string for your MongoDB database
 `NEXTAUTH_SECRET`: A random string used to encrypt the session
+`DISCORD_CLIENT_ID`: The client ID for your Discord app
+`DISCORD_CLIENT_SECRET`: The client secret for your Discord app
 
 ## Install dependencies
 
@@ -68,6 +70,8 @@ You'll need to set up the following secrets in Google Cloud:
 - GITHUB_PERSONAL_ACCESS_TOKEN (the GitHub personal access token)
 - NEXTAUTH_SECRET (a random string used to encrypt the session)
 - MONGO_URI (the connection string for your MongoDB database)
+- DISCORD_CLIENT_ID (the client ID for your Discord app)
+- DISCORD_CLIENT_SECRET (the client secret for your Discord app)
 
 The following principals must be granted the `Secret Manager Secret Accessor` role on the secret: 
 
