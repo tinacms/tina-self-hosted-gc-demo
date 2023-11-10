@@ -21,7 +21,7 @@ steps:
       - '-c'
       - |
         GITHUB_OWNER=$(echo ${REPO_FULL_NAME} | cut -d'/' -f1)
-        gcloud run deploy self-hosted-docker-demo --image gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA --region us-central1 --platform managed --allow-unauthenticated --update-env-vars MONGODB_URI=$$MONGODB_URI,NEXTAUTH_SECRET=$$NEXTAUTH_SECRET,GITHUB_PERSONAL_ACCESS_TOKEN=$$GITHUB_PERSONAL_ACCESS_TOKEN,GITHUB_OWNER=$$GITHUB_OWNER,GITHUB_REPO=$REPO_NAME,GITHUB_BRANCH=$BRANCH_NAME
+        gcloud run deploy self-hosted-docker-demo --image gcr.io/$PROJECT_ID/$REPO_NAME:$COMMIT_SHA --region us-central1 --platform managed --allow-unauthenticated --update-env-vars MONGODB_URI=$$MONGODB_URI,NEXTAUTH_SECRET=$$NEXTAUTH_SECRET,GITHUB_PERSONAL_ACCESS_TOKEN=$$GITHUB_PERSONAL_ACCESS_TOKEN,GITHUB_OWNER=$$GITHUB_OWNER,GITHUB_REPO=$REPO_NAME,GITHUB_BRANCH=$BRANCH_NAME,NEXTAUTH_URL=https://${_DOMAIN}/api/auth
     secretEnv:
       - 'MONGODB_URI'
       - 'GITHUB_PERSONAL_ACCESS_TOKEN'
