@@ -26,7 +26,7 @@
     "tinacms-gitprovider-github": "0.0.0-20231110150831",
     "ts-node": "^10.9.1",
     "tsx": "^3.12.7",
-    "wrangler": "^3.4.0"
+    "wrangler": "^3.19.0"
   },
   "devDependencies": {
     "@11ty/eleventy": "^2.0.1",
